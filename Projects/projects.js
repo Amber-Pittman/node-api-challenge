@@ -10,7 +10,13 @@ router.post("/", (req, res, next) => {
     .then(newProject => {
         res.status(201).json(newProject)
     })
-    .catch(next)
+    //.catch(next)
+    .catch(error => {
+        console.log(error)
+        res.status(404).json({
+            error: "Project could not be created."
+        })
+    })
 })
 
 // Read projects
@@ -19,7 +25,13 @@ router.get("/", (req, res, next) => {
         .then(projects => {
             res.status(200).json(projects)
         })
-        .catch(next)
+        //.catch(next)
+        .catch(error => {
+            console.log(error)
+            res.status(404).json({
+                error: "Projects could not be found."
+            })
+        })
 })
 
 // Read individual project
@@ -30,7 +42,13 @@ router.get("/:id", (req, res, next) => {
         .then((project) => {
                 res.status(200).json(project)
             })
-        .catch(next)
+        //.catch(next)
+        .catch(error => {
+            console.log(error)
+            res.status(404).json({
+                error: "Project by ID could not be found."
+            })
+        })
 })
 
 
@@ -41,7 +59,13 @@ router.get("/:id/actions", (req, res, next) => {
         .then(action => {
             res.status(200).json(action)
         })
-        .catch(next)
+        //.catch(next)
+        .catch(error => {
+            console.log(error)
+            res.status(404).json({
+                error: "Project by ID Actions could not be found."
+            })
+        })
 })
 
 router.put("/:id", (req, res, next) => {
@@ -52,7 +76,13 @@ router.put("/:id", (req, res, next) => {
         .then(project => {
             res.status(200).json(project)
         })
-        .catch(next)
+        //.catch(next)
+        .catch(error => {
+            console.log(error)
+            res.status(404).json({
+                error: "Project by ID could not be updated."
+            })
+        })
 })
 
 router.delete("/:id", (req, res, next) => {
@@ -62,7 +92,13 @@ router.delete("/:id", (req, res, next) => {
                 message: "Project Deleted."
             })
         })
-        .catch(next)
+        //.catch(next)
+        .catch(error => {
+            console.log(error)
+            res.status(404).json({
+                error: "Project by ID could not be deleted."
+            })
+        })
 })
 
 module.exports = router
