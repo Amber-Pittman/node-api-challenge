@@ -4,8 +4,8 @@
   "description": "Node API Challenge",
   "main": "index.js",
   "scripts": {
-    "watch": "node index.js",
-    "start": "nodemon index.js",
+    "server": "nodemon index.js",
+    "start": "node index.js",
     "db:seed": "knex seed:run"
   },
   "repository": {

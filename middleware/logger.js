@@ -6,11 +6,11 @@ module.exports = (options) => {
                 break
             case "long":
                 default:
-                    console.log(`
+                    console.log(`[
                         ${new Date().toISOString()}
                         ${req.ip}
                         ${req.method}
-                        ${req.url}
+                        ${req.url}]
                     `)
                     break
         }

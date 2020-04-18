@@ -17,12 +17,18 @@ const express = require("express")
 const cors = require("cors")
 const logger = require("./middleware/logger")
 
+const welcomeRouter = require("./Welcome/welcome")
+const projectsRouter = require("./Projects/projects")
+
 const server = express()
 const port = 4000
 
 server.use(express.json())
-server.use(cors)
-server.use(logger({ format: "long"}))
+server.use(cors())
+server.use(logger({ format: "long" }))
+
+server.use("/", welcomeRouter)
+server.use("/api/projects", projectsRouter)
 
 server.use((req, res) => {
     res.status(404).json({
