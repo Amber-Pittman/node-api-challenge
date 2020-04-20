@@ -48,3 +48,5 @@ server.use((error, req, res, next) => {
 server.listen(port, () => {
     console.log(`Server running at http:localhost:${port}`)
 })
+
+// npm run server start
