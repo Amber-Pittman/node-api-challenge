@@ -4,80 +4,87 @@ const actionsRouter = require("../data/helpers/actionModel")
 
 const router = express.Router();
 
-router.post("/", (req, res) => {
-    const newAction = req.body
-
-    actionsRouter.insert(newAction)
-        .then(action => {
-            res.status(201).json(action)
-        })
-        .catch(error => {
-            console.log(error);
-            res.status(404).json({
-                error: "Post action could not be added."
-            })
-        })
-})
-
-router.get("/", (req, res) => {
-    actionsRouter.get()
+router.get("/", (req, res, next) => {
+    console.log("req.query", req.query)
+    actionsRouter
+        .get()
         .then(action => {
             res.status(200).json(action)
         })
-        .catch(error => {
-            console.log(error)
-            res.status(404).json({
-                error: "Get action could not be found."
-            })
-        })
+        .catch(next)
+        // .catch(error => {
+        //     console.log(error)
+        //     res.status(404).json({
+        //         error: "Get action could not be found."
+        //     })
+        // })
 })
 
-router.get("/:id", (req, res) => {
-    const { id } = req.params
-
-    actionsRouter.get(id)
-        .then(action => {
-            res.status(200).json(action)
-        })
-        .catch(error => {
-            console.log(error)
-            res.status(404).json({
-                error: "ID action not found."
-            })
-        })
+router.get("/:id", validateActionId(), (req, res, next) => {
+   res.status(200).json(req.action)
+   next()
 })
 
-router.put("/:id", (req, res) => {
-    const { id } = req.params
-
-    actionsRouter.update(id, req.body)
+router.put("/:id", validateAction(), validateActionId(), (req, res, next) => {
+    actionsRouter
+        .update(req.params.id, req.body)
         .then(updated => {
             res.status(200).json(updated)
         })
-        .catch(error => {
-            console.log(error)
-            res.status(404).json({
-                error: "Put action could not update."
-            })
-        })
+        .catch(next)
+        // .catch(error => {
+        //     console.log(error)
+        //     res.status(404).json({
+        //         error: "Put action could not update."
+        //     })
+        // })
 })
 
-router.delete("/:id", (req, res) => {
-    const { id } = req.params
-
-    actionsRouter.remove(id)
+router.delete("/:id", validateActionId(), (req, res, next) => {
+    actionsRouter
+        .remove(req.params.id)
         .then(deleted => {
             console.log(deleted)
             res.status(204).json({
                 message: "Action was deleted"
             })
         })
-        .catch(error => {
-            console.log(error)
-            res.status(404).json({
-                error: "Delete action not deleted."
-            })
-        })
+        .catch(next)
+        // .catch(error => {
+        //     console.log(error)
+        //     res.status(404).json({
+        //         error: "Delete action not deleted."
+        //     })
+        // })
 })
+
+function validateActionId(req, res, next) {
+    return (req, res, next) => {
+        actionsRouter
+            .get(req.params.id)
+            .then(action => {
+                if (action) {
+                    req.action = action
+                    next()
+                } else {
+                    res.status(404).json({
+                        errorMessage: "Cannot validate Action ID"
+                    })
+                }
+            })
+            .catch(next) 
+    }
+}
+
+function validateAction(req, res, next) {
+    return (req, res, next) => {
+        if (!req.body.description) {
+            return res.status(400).json({
+                message: "Missing Action Description Information"
+            })
+        }
+        next()
+    }
+}
 
 module.exports = router
