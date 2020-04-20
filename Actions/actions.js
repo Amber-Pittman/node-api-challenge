@@ -12,12 +12,6 @@ router.get("/", (req, res, next) => {
             res.status(200).json(action)
         })
         .catch(next)
-        // .catch(error => {
-        //     console.log(error)
-        //     res.status(404).json({
-        //         error: "Get action could not be found."
-        //     })
-        // })
 })
 
 router.get("/:id", validateActionId(), (req, res, next) => {
@@ -32,12 +26,6 @@ router.put("/:id", validateAction(), validateActionId(), (req, res, next) => {
             res.status(200).json(updated)
         })
         .catch(next)
-        // .catch(error => {
-        //     console.log(error)
-        //     res.status(404).json({
-        //         error: "Put action could not update."
-        //     })
-        // })
 })
 
 router.delete("/:id", validateActionId(), (req, res, next) => {
@@ -50,12 +38,6 @@ router.delete("/:id", validateActionId(), (req, res, next) => {
             })
         })
         .catch(next)
-        // .catch(error => {
-        //     console.log(error)
-        //     res.status(404).json({
-        //         error: "Delete action not deleted."
-        //     })
-        // })
 })
 
 function validateActionId(req, res, next) {

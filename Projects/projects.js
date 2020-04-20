@@ -16,12 +16,6 @@ router.get("/", (req, res, next) => {
             res.status(200).json(projects)
         })
         .catch(next)
-        // .catch(error => {
-        //     console.log(error)
-        //     res.status(404).json({
-        //         error: "Projects could not be found."
-        //     })
-        // })
 })
 
 // Create new project
@@ -32,12 +26,6 @@ router.post("/", validateProject(), (req, res, next) => {
             res.status(201).json(newProject)
         })
         .catch(next)
-        // .catch(error => {
-        //     console.log(error)
-        //     res.status(404).json({
-        //         error: "Project could not be created."
-        //     })
-        // })
 })
 
 // Create new project action
@@ -51,12 +39,6 @@ router.post("/:id/actions", validateProjectId(), validateAction(), (req, res, ne
             res.status(200).json(action)
         })
         .catch(next)
-        // .catch(error => {
-        //     console.log(error)
-        //     res.status(404).json({
-        //         error: "Project by ID Actions could not be found."
-        //     })
-        // })
 })
 
 // Read individual project
@@ -73,12 +55,6 @@ router.get("/:id/actions", validateProjectId(), (req, res, next) => {
             res.status(200).json(action)
         })
         .catch(next)
-        // .catch(error => {
-        //     console.log(error)
-        //     res.status(404).json({
-        //         error: "Project by ID Actions could not be found."
-        //     })
-        // })
 })
 
 router.put("/:id", validateProjectId(), validateProject(), (req, res, next) => {
@@ -88,12 +64,6 @@ router.put("/:id", validateProjectId(), validateProject(), (req, res, next) => {
             res.status(200).json(project)
         })
         .catch(next)
-        // .catch(error => {
-        //     console.log(error)
-        //     res.status(404).json({
-        //         error: "Project by ID could not be updated."
-        //     })
-        // })
 })
 
 router.delete("/:id", validateProjectId(), (req, res, next) => {
@@ -105,12 +75,6 @@ router.delete("/:id", validateProjectId(), (req, res, next) => {
             })
         })
         .catch(next)
-        // .catch(error => {
-        //     console.log(error)
-        //     res.status(404).json({
-        //         error: "Project by ID could not be deleted."
-        //     })
-        // })
 })
 
 function validateProject(req, res, next) {
